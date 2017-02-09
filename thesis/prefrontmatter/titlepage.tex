@@ -1,0 +1,30 @@
+%!TEX root = ../Thesis.tex 
+
+\thispagestyle{empty}             % No page numbers
+\calccentering{\unitlength}
+\begin{adjustwidth*}{\unitlength}{-\unitlength}
+    \begin{adjustwidth}{-0.5cm}{-0.5cm}
+        \sffamily
+        \begin{flushright}
+            \thesistypeabbr{} Thesis\\*[0cm]
+            \thesistype{}\\
+            \bigskip
+            \textit{Supervised by:}\\
+            Prof. dr. Elena Marchiori\\
+        \end{flushright}
+        \vspace*{\fill}
+        \noindent
+        \includegraphics[width=0.7\textwidth]{rulogo}\\*[0.5cm]
+        \HUGE \thesistitle{}\\*[0.2cm]
+        \Huge \thesissubtitle{}\\*[1.2cm]
+        \parbox[b]{0.5\linewidth}{%
+            \LARGE 
+            \thesisauthor{}\\*[1.2cm]
+            \Large
+            \thesislocation{}, \monthname[\the\month] \the\year
+        }
+       % \hfill\includegraphics[scale=0.3]{rblogo}
+    \end{adjustwidth}
+\end{adjustwidth*}
+\normalfont
+\normalsize

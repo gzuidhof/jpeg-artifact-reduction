@@ -1,0 +1,41 @@
+%!TEX root = ../Thesis.tex
+\chapter{Methods}
+
+\textit{TODO: update from proposal, this is currently just a copy paste from the initial proposal version}
+
+
+
+The aim of this project is to develop a deep learning based approach for reduction of artifacts introduced by JPEG image compression.  To achieve this the project has the following objectives:
+
+\begin{itemize}
+\item Train a system to remove artifacts from compressed images. This mainly involves identifying a suitable convolutional neural network (CNN) architecture, a proper weight initialization, and an efficient training policy. Also, it entails developing a method of dealing with the edges of images.
+\item Evaluating the performance of the developed system using a large cohort of images, preferably from standardized benchmark datasets which allow for straightforward comparison to prior work.
+\end{itemize}
+
+\section{Architecture}
+
+A challenge in developing convolutional neural networks (and deep neural networks in general) is finding the right architecture. Every year new insights lead to novel architectures which outperform previous year's winning configuration in the ImageNet competition. So far, in this domain, fairly shallow networks have been used. The first obvious way of trying to improve upon prior work is increasing the network depth.
+
+Zhang et al.'s approach of learning the residual instead of the cleaned up image makes sense, however, this may prevent the network from applying higher level ``domain'' information present in the image, as the original image is not latently available in later layers. Adding a skip connection with the input (JPEG) image to different points at various depths may prove beneficial. 
+
+Cavigelli et al. \cite{CavigelliHB16} note that learning the residual instead of the cleaned up image does not improve results. So perhaps Zhang's results are not reproducible.
+
+Multiple exit points as presented in \cite{googlenet} may help with the vanishing gradient problem which is especially present in regression networks, by adding a gradient from halfway through the network.Although this only helped marginally for their problem (classification task in the ImageNet competition), it appears that for the CAS-CNN \cite{CavigelliHB16} this was effective, although their method was not tested without these extra exit points.
+
+A fractalnet approach (todo: add citation) may also be an effective way to tackle this problem.
+
+\section{Miscellaneous improvements}
+
+\paragraph{Data augmentation} Data augmentation can be beneficial, but it has hardly been applied to this problem. Great care should be taken to only perform pertubations that do not affect the position of the 8x8 blocks. Hue, value and saturation jittering should be fine. Augmentations like flipping can only be applied if the image is a multiple of 8 in the specific dimension.
+
+\paragraph{Alternative training sets}
+The previous, related work mentioned in the background chapter is generally trained on either a subset of the evaluation datasets, or images from the ImageNet competition. These images are already compressed, and may not be a suitable starting point. Alternative training sets could be sought after which are losslessly compressed, or compressed with high quality settings.
+
+
+\section{Datasets}
+Standardized datasets exist for evaluating the performance of image processing tasks such as artifact removal. TODO expand:
+\url{https://drive.google.com/folderview?id=0B-_yeZDtQSnobXIzeHV5SjY5NzA&usp=sharing}
+Berkeley Segmentation Dataset (BSD) \url{https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html#bsds500}
+
+%CAS-CNN A Deep Convolutional Neural Network for Image Compression Artifact Suppression
+%https://arxiv.org/abs/1611.07233
