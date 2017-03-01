@@ -162,7 +162,7 @@ When the chroma components are subsampled, much of the fine detail is lost. The 
 Posterization of an image is the loss of gradual change in tone. Whereas in the original image a color may smoothly go from one color to another, in the compressed image this may be a series of abrupt steps. This can be caused by both chroma component subsampling and quantization of these components. 
 
 
-\section{Artifact removal}
+\section{Prior work}
 
 Automated artifact removal methods exist that aim to remove or reduce these artifacts as a post-processing step. These range from hand-crafted algorithms to algorithms with learned parameters. \textit{TODO: Expand on non-DL approaches}
 
@@ -236,6 +236,16 @@ CAS-CNN w/ loss FT \cite{CavigelliHB16}&31.70&0.895&30.88\\
 
 \subsection{Sparse coding approaches}
 \textit{TODO}
+
+\section{Exploiting JPEG redundancies further with color}
+Most, if not all, prior work on JPEG compression only consider grayscale images. As the Y, Cb and Cr components of the image are processed in the same way it is argued that these methods also apply color images by simply applying it to each of these components independently. While it is true that this works, the components are not processed in exactly the same way. First of all, for the chroma components often a quantization matrix with higher values is used (which means it is more lossy). Secondly, it is very common that the chroma components are first downscaled (e.g. with a 2x2 factor) prior to splitting into the 8$\times$8 pixel blocks. To apply methods only trained on grayscale images, one should thus first downscale the color components to match the 8x8 DCT blocks. 
+
+JPEG compression artifact reduction mostly relies on the redundancies of adjacent 8$\times$8 blocks of pixels, especially those that operate (partially) in the DCT domain. The DCT blocks of the chroma components, however, describe a 16$\times$16 block in the original image. These redundancies are thus at a larger spatial scale than the Y component's block redundancies. As the luma and chrominance are likely very highly correlated on a spatially local scale, the larger scale information of the chroma channels can be used to improve the luma channel, and vice versa.
+
+Also, due to the more aggressive quantization of the chroma channels, the possible interval of original value of one of the DCT coefficients is large, especially for the high frequency components. This is finer for the luma channel, this information can be used to better infer the original coefficients.
+
+
+
 
 \section{Evaluative measures}
 To determine the efficacy of a method for compression artifact removal several quantitative methods are available. Generally it is a distance measure between the restored image and the original image prior to compression.
