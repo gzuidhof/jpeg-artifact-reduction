@@ -91,3 +91,5 @@ ENV/
 data/*
 *.pth
 *.hdf5
+models/*
+*.asv
